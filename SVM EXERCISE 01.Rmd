@@ -1,0 +1,79 @@
+---
+title: "SVM and Data Evaluation - Khirana Dwicahyo"
+output: html_notebook
+---
+
+#load_library
+```{r}
+library(e1071)
+library(caret)
+library(ggplot2)
+library(lattice)
+library(caTools)
+```
+
+#SVM
+```{r}
+set.seed(1000)
+```
+
+#data_read_(using datasets cars)
+```{r}
+x <- cars
+x
+```
+
+#make_a_factor
+```{r}
+y <- factor(rep(c(-1,1), c(25,25)))
+y
+```
+
+#make_a_matrix
+#each data factor is one then the data will be added 70
+```{r}
+x[y == 1, ] <- x[y == 1, ] +70
+x
+```
+
+#framing
+```{r}
+data_frame <- data.frame(x,y)
+head(data_frame)
+```
+
+#coloumn_naming
+```{r}
+colnames(data_frame) <- c("speed", "distance", "machine")
+head(data_frame)
+```
+
+#svm_method_and_summary
+```{r}
+modelSVM1 <- svm(machine ~ ., data = data_frame, kernel = "linear")
+summary(modelSVM1)
+```
+#SVM_PLOT_DATASETS_CARS
+```{r}
+plot(modelSVM1, data_frame)
+```
+#Data_Evaluation
+```{r}
+nrow(data_frame)
+```
+```{r}
+set.seed(1)
+```
+
+#data_splitting
+```{r}
+split <- sample.split(data_frame$speed, SplitRatio = 0.6)
+train_Set <- subset(data_frame, split==T)
+test_Set <- subset(data_frame, split==T)
+train_Set
+```
+```{r}
+test_Set
+```
+
+
